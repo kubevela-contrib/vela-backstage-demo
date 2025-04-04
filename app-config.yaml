@@ -6,10 +6,17 @@ organization:
   name: My Company
 
 backend:
+  reading:
+    allow:
+      - host: backstage-plugin-vela.vela-system:8080 # Required, change this to the endpoint of the connector
+      - host: raw.githubusercontent.com # Optional
+      - host: kubevela.io # Optional
+      - host: kubevela.net # Optional
   # Used for enabling authentication, secret is shared by all backend plugins
-  # See https://backstage.io/docs/tutorials/backend-to-backend-auth for
+  # See https://backstage.io/docs/auth/service-to-service-auth for
   # information on the format
-  # auth:
+  auth:
+    dangerouslyDisableDefaultAuthPolicy: true
   #   keys:
   #     - secret: ${BACKEND_SECRET}
   baseUrl: http://127.0.0.1:7007
@@ -18,7 +25,7 @@ backend:
     # Uncomment the following host directive to bind to specific interfaces
     # host: 127.0.0.1
   csp:
-    connect-src: ["'self'", "http:", "https:"]
+    connect-src: ["'self'", 'http:', 'https:']
     # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
     # Default Helmet Content-Security-Policy values can be removed by setting the key to false
   cors:
@@ -29,22 +36,14 @@ backend:
   # The production database configuration is stored in app-config.production.yaml
   database:
     client: better-sqlite3
-    connection: ":memory:"
-  cache:
-    store: memory
+    connection: ':memory:'
   # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
-  reading:
-    allow:
-      - host: backstage-plugin-vela.vela-system:8080
-      - host: raw.githubusercontent.com
-      - host: kubevela.io
-      - host: kubevela.net
 
 integrations:
   github:
     - host: github.com
       # This is a Personal Access Token or PAT from GitHub. You can find out how to generate this token, and more information
-      # about setting up the GitHub integration here: https://backstage.io/docs/getting-started/configuration#setting-up-a-github-integration
+      # about setting up the GitHub integration here: https://backstage.io/docs/integrations/github/locations#configuration
       token: ${GITHUB_TOKEN}
     ### Example for how to add your GitHub Enterprise instance using the API:
     # - host: ghe.example.net
@@ -54,24 +53,27 @@ integrations:
 proxy:
   ### Example for how to add a proxy endpoint for the frontend.
   ### A typical reason to do this is to handle HTTPS and CORS for internal services.
-  # '/test':
-  #   target: 'https://example.com'
-  #   changeOrigin: true
+  # endpoints:
+  #   '/test':
+  #     target: 'https://example.com'
+  #     changeOrigin: true
 
 # Reference documentation http://backstage.io/docs/features/techdocs/configuration
 # Note: After experimenting with basic setup, use CI/CD to generate docs
 # and an external cloud storage when deploying TechDocs for production use-case.
 # https://backstage.io/docs/features/techdocs/how-to-guides#how-to-migrate-from-techdocs-basic-to-recommended-deployment-approach
 techdocs:
-  builder: "local" # Alternatives - 'external'
+  builder: 'local' # Alternatives - 'external'
   generator:
-    runIn: "docker" # Alternatives - 'local'
+    runIn: 'docker' # Alternatives - 'local'
   publisher:
-    type: "local" # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
+    type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
 
 auth:
   # see https://backstage.io/docs/auth/ to learn about auth providers
-  providers: {}
+  providers:
+    # See https://backstage.io/docs/auth/guest/provider
+    guest: {}
 
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
@@ -81,7 +83,7 @@ catalog:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
   rules:
-    - allow: [Domain, System, Component, API, Location, Template, User, Group]
+    - allow: [Domain, System, Component, API, Location, Template, User, Group, Resource]
   locations:
     # Local example data, file locations are relative to the backend process, typically `packages/backend`
     - type: file
@@ -108,10 +110,24 @@ catalog:
     #   target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme-corp.yaml
     #   rules:
     #     - allow: [User, Group]
+  # Experimental: Always use the search method in UrlReaderProcessor.
+  # New adopters are encouraged to enable it as this behavior will be the default in a future release.
+  useUrlReadersSearch: true
+  providers:
+# Give some configuration to the Vela Entity Provider
+    vela:
+      host: "http://backstage-plugin-vela.vela-system:8080/" # Change this to the endpoint of the connector
+      schedule: #optional section
+        initialDelay: { seconds: 5 }
+        # frequency is the refresh rate for the Vela API, defaults to 60 seconds
+        frequency: { seconds: 30 }
+        # timeout is the timeout limit for the Vela API, defaults to 600 seconds
+        timeout: { seconds: 30 }
 
-vela:
-  host: "http://backstage-plugin-vela.vela-system:8080/"
-  # frequency is the refresh rate for the Vela API, default to 60 seconds, the unit is seconds
-  frequency: 300
-  # timeout is the timeout limit for the Vela API, default to 600 seconds, the unit is seconds
-  timeout: 300
+kubernetes:
+  # see https://backstage.io/docs/features/kubernetes/configuration for kubernetes configuration options
+
+# see https://backstage.io/docs/permissions/getting-started for more on the permission framework
+permission:
+  # setting this to `false` will disable permissions
+  enabled: true
