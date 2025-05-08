@@ -7,7 +7,7 @@
  */
 
 import { createBackend } from '@backstage/backend-defaults';
-import { velaProviderModule } from '@oamdev/plugin-kubevela-backend';
+import { velaProviderModule } from '@kubevela-contrib/plugin-kubevela-backend';
 
 const backend = createBackend();
 
