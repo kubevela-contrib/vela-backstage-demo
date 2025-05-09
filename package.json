@@ -53,6 +53,6 @@
     ]
   },
   "dependencies": {
-    "@kubevela-contrib/plugin-kubevela-backend": "^0.16.0"
+    "@kubevela-contrib/plugin-kubevela-backend": "^0.17.0"
   }
 }

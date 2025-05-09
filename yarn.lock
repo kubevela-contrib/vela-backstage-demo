@@ -7520,9 +7520,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@kubevela-contrib/plugin-kubevela-backend@npm:^0.16.0":
-  version: 0.16.0
-  resolution: "@kubevela-contrib/plugin-kubevela-backend@npm:0.16.0"
+"@kubevela-contrib/plugin-kubevela-backend@npm:^0.17.0":
+  version: 0.17.0
+  resolution: "@kubevela-contrib/plugin-kubevela-backend@npm:0.17.0"
   dependencies:
     "@backstage/backend-common": "npm:^0.25.0"
     "@backstage/catalog-model": "npm:^1.7.3"
@@ -7534,7 +7534,7 @@ __metadata:
     node-fetch: "npm:^2.6.7"
     winston: "npm:^3.2.1"
     yn: "npm:^4.0.0"
-  checksum: 10c0/b161e65aa95502a0f1dee98c3c50b885262f6fb81f56667d2204fcb29c1fbae7f647f8065fdc93b1b01ecbdcd2f09419bb634962cb3341ffe48446c7bee23c15
+  checksum: 10c0/de2ea5b762b187619d915f33ada37d7aa932916a8f7b283c9c47fe90a1f28da5c9108b9c325ef3fbfd3232949622db5cfa86908a45fab98db526a2a527a44b53
   languageName: node
   linkType: hard
 
@@ -28723,7 +28723,7 @@ __metadata:
   dependencies:
     "@backstage/cli": "npm:^0.31.1"
     "@backstage/e2e-test-utils": "npm:^0.1.1"
-    "@kubevela-contrib/plugin-kubevela-backend": "npm:^0.16.0"
+    "@kubevela-contrib/plugin-kubevela-backend": "npm:^0.17.0"
     "@playwright/test": "npm:^1.32.3"
     node-gyp: "npm:^10.0.0"
     prettier: "npm:^2.3.2"
