@@ -3,7 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - '**'  # Run on every commit to any branch
+      - main
 
 jobs:
   build-and-push:
@@ -43,5 +43,5 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: shivin/backstage:latest
+          tags: kubevelacontribv2/backstage:latest
   
