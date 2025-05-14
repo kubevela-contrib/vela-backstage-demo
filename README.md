@@ -8,15 +8,19 @@ This is your newly scaffolded Backstage App, Good Luck!
 
 You need to run the [backstage-plugin-kubevela](https://github.com/kubevela-contrib/backstage-plugin-kubevela) first before running the backstage app.
 
-Configure the `vela.host` and `backend.reading.allow` below, pointing to the kubevela plugin endpoint.
+Configure the `catalog.providers.vela.host` and `backend.reading.allow` below, pointing to the kubevela plugin endpoint.
 
 ```
-vela:
-  host: "http://47.254.33.41:32505"
-  # frequency is the refresh rate for the Vela API, default to 60 seconds, the unit is seconds
-  frequency: 30
-  # timeout is the timeout limit for the Vela API, default to 600 seconds, the unit is seconds
-  timeout: 60
+catalog:
+  providers:
+    vela:
+      host: "http://47.254.33.41:32505"
+      schedule: #optional section
+        initialDelay: { seconds: 5 }
+        # frequency is the refresh rate for the Vela API, defaults to 60 seconds
+        frequency: { seconds: 30 }
+        # timeout is the timeout limit for the Vela API, defaults to 600 seconds
+        timeout: { seconds: 30 }
 
 backend:
   reading:
