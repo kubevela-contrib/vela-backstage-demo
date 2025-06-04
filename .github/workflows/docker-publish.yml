@@ -43,5 +43,5 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: oamdev/backstage:latest
+          tags: oamdev/backstage:v0.1
   
